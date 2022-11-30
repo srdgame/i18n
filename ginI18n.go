@@ -24,6 +24,7 @@ type ginI18nImpl struct {
 // getMessage get localize message by lng and messageID
 func (i *ginI18nImpl) getMessage(param interface{}) (string, error) {
 	lng := i.getLngHandler(i.currentContext, i.defaultLanguage.String())
+	// fmt.Printf("ginI18nImpl.getMessage lng:%s\n", lng)
 	localizer := i.getLocalizerByLng(lng)
 
 	localizeConfig, err := i.getLocalizeConfig(param)
@@ -123,8 +124,10 @@ func (i *ginI18nImpl) newLocalizer(lng string) *i18n.Localizer {
 func (i *ginI18nImpl) getLocalizerByLng(lng string) *i18n.Localizer {
 	localizer, hasValue := i.localizerByLng[lng]
 	if hasValue {
+		fmt.Printf("ginI18nImpl.getLocalizerByLng lng:%s hasValue\n", lng)
 		return localizer
 	}
+	fmt.Printf("ginI18nImpl.getLocalizerByLng lng:%s defaultLanguage\n", lng)
 
 	return i.localizerByLng[i.defaultLanguage.String()]
 }
